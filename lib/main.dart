@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/services/theme_service.dart';
+import 'core/services/user_prefs_service.dart';
 import 'features/habit/bindings.dart';
 import 'features/onboarding/bindings.dart';
 import 'routes/app_pages.dart';
@@ -10,6 +11,10 @@ import 'routes/app_pages.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
+  final userPrefs = UserPrefsService(prefs);
+  await userPrefs.init();
+  GetIt.I.registerSingleton<UserPrefsService>(userPrefs);
+
   GetIt.I.registerSingleton<ThemeService>(ThemeService(prefs));
   await GetIt.I<ThemeService>().init();
   OnboardingBindings.register();

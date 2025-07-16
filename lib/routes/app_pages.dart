@@ -2,39 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../core/services/theme_service.dart';
+import '../core/constants.dart';
+import '../core/services/user_prefs_service.dart';
 import '../features/habit/presentation/pages/home_screen.dart';
-import '../features/onboarding/presentation/pages/onboarding_page.dart';
+import '../features/onboarding/presentation/pages/theme_choice_page.dart';
+import '../features/onboarding/presentation/pages/welcome_page.dart';
+import '../features/onboarding/presentation/pages/whats_new_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 import '../routes/app_routes.dart';
 
 class AppPages {
-  static const onboarding = '/onboarding';
-
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
         redirect: (context, state) {
-          final service = GetIt.I<ThemeService>();
-          return service.firstLaunch ? onboarding : AppRoutes.home;
+          final prefs = GetIt.I<UserPrefsService>();
+          if (prefs.firstLaunch) return AppRoutes.onboardingWelcome;
+          if (prefs.appVersionSeen != appVersion) {
+            return AppRoutes.onboardingWhatsNew;
+          }
+          return AppRoutes.home;
         },
       ),
       GoRoute(
-        path: onboarding,
-        builder: (context, state) => const OnboardingPage(),
+        path: AppRoutes.onboardingWelcome,
+        builder: (_, __) => const WelcomePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.onboardingWhatsNew,
+        builder: (_, __) => const WhatsNewPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.themeChoice,
+        builder: (_, __) => const ThemeChoicePage(),
       ),
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => const HomeScreen(),
+        builder: (_, __) => const HomeScreen(),
       ),
       GoRoute(
         path: AppRoutes.settings,
-        builder: (context, state) => const SettingsPage(),
+        builder: (_, __) => const SettingsPage(),
       ),
       GoRoute(
         path: AppRoutes.habitForm,
-        builder: (context, state) => Scaffold(
+        builder: (_, __) => Scaffold(
           appBar: AppBar(title: const Text('Habit Form')),
           body: const Center(child: Text('Form coming soon')),
         ),

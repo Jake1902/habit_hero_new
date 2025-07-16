@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constants.dart';
+
 enum AppTheme { light, dark, highContrast }
 
 class ThemeService extends ChangeNotifier {
@@ -30,17 +32,26 @@ class ThemeService extends ChangeNotifier {
   ThemeData get themeData {
     switch (_theme) {
       case AppTheme.dark:
-        return ThemeData.dark(useMaterial3: true);
+        return ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: accentColor,
+            brightness: Brightness.dark,
+          ),
+        );
       case AppTheme.highContrast:
-
         return ThemeData.from(
-          colorScheme: const ColorScheme.highContrastLight(),
+          colorScheme:
+              const ColorScheme.highContrastLight().copyWith(primary: accentColor),
           useMaterial3: true,
         );
 
       case AppTheme.light:
       default:
-        return ThemeData(useMaterial3: true, colorSchemeSeed: Colors.deepPurple);
+        return ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
+        );
     }
   }
 
