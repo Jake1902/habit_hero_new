@@ -6,6 +6,7 @@ import '../core/constants.dart';
 import '../core/services/user_prefs_service.dart';
 import '../features/habit/presentation/pages/home_screen.dart';
 import '../features/onboarding/presentation/pages/theme_choice_page.dart';
+import '../features/onboarding/presentation/controller/onboarding_controller.dart';
 import '../features/onboarding/presentation/pages/welcome_page.dart';
 import '../features/onboarding/presentation/pages/whats_new_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
@@ -36,7 +37,9 @@ class AppPages {
       ),
       GoRoute(
         path: AppRoutes.themeChoice,
-        builder: (_, __) => const ThemeChoicePage(),
+        builder: (_, __) => ThemeChoicePage(
+          controller: GetIt.I<OnboardingController>(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.home,
