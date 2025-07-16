@@ -9,6 +9,7 @@ import '../features/onboarding/presentation/pages/theme_choice_page.dart';
 import '../features/onboarding/presentation/pages/welcome_page.dart';
 import '../features/onboarding/presentation/pages/whats_new_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
+import '../features/stats/presentation/pages/stats_page.dart';
 import '../routes/app_routes.dart';
 
 class AppPages {
@@ -39,11 +40,16 @@ class AppPages {
       ),
       GoRoute(
         path: AppRoutes.home,
+        name: AppRoutes.home,
         builder: (_, __) => const HomeScreen(),
       ),
       GoRoute(
         path: AppRoutes.settings,
         builder: (_, __) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.stats,
+        builder: (_, __) => const StatsPage(),
       ),
       GoRoute(
         path: AppRoutes.habitForm,

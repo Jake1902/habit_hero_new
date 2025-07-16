@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
 import 'package:habit_hero_new/features/habit/presentation/controller/habit_controller.dart';
 import 'package:habit_hero_new/features/habit/presentation/pages/home_screen.dart';
-import 'package:habit_hero_new/routes/app_routes.dart';
 import 'package:habit_hero_new/features/settings/presentation/pages/settings_page.dart';
+import 'package:habit_hero_new/routes/app_routes.dart';
 
 void main() {
-  testWidgets('HomeScreen shows settings and add icons', (tester) async {
+  testWidgets('tapping settings navigates to SettingsPage', (tester) async {
     final router = GoRouter(
       routes: [
         GoRoute(
@@ -22,6 +22,7 @@ void main() {
         ),
       ],
     );
+
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (_) => HabitController(),
@@ -29,7 +30,9 @@ void main() {
       ),
     );
 
-    expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
-    expect(find.byIcon(Icons.add_circle_outline), findsOneWidget);
+    await tester.tap(find.byTooltip('Settings'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SettingsPage), findsOneWidget);
   });
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import 'core/services/theme_service.dart';
 import 'core/services/user_prefs_service.dart';
 import 'features/habit/bindings.dart';
+import 'features/habit/presentation/controller/habit_controller.dart';
 import 'features/onboarding/bindings.dart';
 import 'routes/app_pages.dart';
 
@@ -31,10 +33,13 @@ class MyApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: themeService,
       builder: (context, _) {
-        return MaterialApp.router(
-          title: 'Habit Hero',
-          routerConfig: AppPages.router,
-          theme: themeService.themeData,
+        return ChangeNotifierProvider(
+          create: (_) => GetIt.I<HabitController>(),
+          child: MaterialApp.router(
+            title: 'Habit Hero',
+            routerConfig: AppPages.router,
+            theme: themeService.themeData,
+          ),
         );
       },
     );
