@@ -7,10 +7,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:habit_hero_new/core/services/theme_service.dart';
+import 'package:habit_hero_new/core/services/user_prefs_service.dart';
 
 import 'package:habit_hero_new/main.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    final shared = await SharedPreferences.getInstance();
+    final themeService = ThemeService(shared);
+    await themeService.init();
+    final prefs = UserPrefsService(shared);
+    await prefs.init();
+    GetIt.I.registerSingleton<ThemeService>(themeService);
+    GetIt.I.registerSingleton<UserPrefsService>(prefs);
+  });
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
