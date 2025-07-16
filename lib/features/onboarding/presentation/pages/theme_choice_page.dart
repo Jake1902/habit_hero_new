@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 
+import 'package:get_it/get_it.dart';
+
 import '../../../../core/services/theme_service.dart';
 import '../controller/onboarding_controller.dart';
 
 class ThemeChoicePage extends StatelessWidget {
-  const ThemeChoicePage({super.key, required this.controller});
-
-  final OnboardingController controller;
+  const ThemeChoicePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = GetIt.I<OnboardingController>();
     final theme = controller.theme;
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        children: [
-          const Spacer(),
-          Text(
-            'Choose your theme',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(onPressed: () => Navigator.of(context).pop()),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            const Spacer(),
+            Text(
+              'Choose your theme',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,10 +40,11 @@ class ThemeChoicePage extends StatelessWidget {
           ),
           const Spacer(),
           ElevatedButton(
-            onPressed: controller.finish,
+            onPressed: () => controller.finish(context),
             child: const Text('Get Started'),
           ),
         ],
+      ),
       ),
     );
   }
