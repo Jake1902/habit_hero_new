@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../controller/onboarding_controller.dart';
+import '../controller/onboarding_controller.dart';
 
 class WhatsNewPage extends StatelessWidget {
   const WhatsNewPage({super.key});

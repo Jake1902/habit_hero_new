@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
-import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/services/theme_service.dart';
+import '../../../../routes/app_routes.dart';
 import '../controller/onboarding_controller.dart';
 
 class ThemeChoicePage extends StatelessWidget {
-  const ThemeChoicePage({super.key});
+  const ThemeChoicePage({
+    super.key,
+    required this.controller,
+  });
+
+  final OnboardingController controller;
 
   @override
   Widget build(BuildContext context) {
-    final controller = GetIt.I<OnboardingController>();
     final theme = controller.theme;
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +45,12 @@ class ThemeChoicePage extends StatelessWidget {
           ),
           const Spacer(),
           ElevatedButton(
-            onPressed: () => controller.finish(context),
+            onPressed: () async {
+              await controller.finish();
+              if (context.mounted) {
+                context.go(AppRoutes.home);
+              }
+            },
             child: const Text('Get Started'),
           ),
         ],
