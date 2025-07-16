@@ -7,10 +7,7 @@ import '../../../../routes/app_routes.dart';
 import '../controller/onboarding_controller.dart';
 
 class ThemeChoicePage extends StatelessWidget {
-  const ThemeChoicePage({
-    super.key,
-    required this.controller,
-  });
+  const ThemeChoicePage({super.key, required this.controller});
 
   final OnboardingController controller;
 
@@ -21,40 +18,42 @@ class ThemeChoicePage extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(onPressed: () => Navigator.of(context).pop()),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            const Spacer(),
-            Text(
-              'Choose your theme',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: AppTheme.values
-                .map(
-                  (t) => _ThemeCard(
-                    title: t.name,
-                    selected: theme == t,
-                    onTap: () => controller.selectTheme(t),
-                  ),
-                )
-                .toList(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              const Spacer(),
+              Text(
+                'Choose your theme',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: AppTheme.values
+                    .map(
+                      (t) => _ThemeCard(
+                        title: t.name,
+                        selected: theme == t,
+                        onTap: () => controller.selectTheme(t),
+                      ),
+                    )
+                    .toList(),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () async {
+                  await controller.finish();
+                  if (context.mounted) {
+                    context.go(AppRoutes.home);
+                  }
+                },
+                child: const Text('Get Started'),
+              ),
+            ],
           ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () async {
-              await controller.finish();
-              if (context.mounted) {
-                context.go(AppRoutes.home);
-              }
-            },
-            child: const Text('Get Started'),
-          ),
-        ],
-      ),
+        ),
       ),
     );
   }
