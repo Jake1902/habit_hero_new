@@ -9,85 +9,98 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = GetIt.I<OnboardingController>();
-    final theme = Theme.of(context);
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF0E0E0E), Color(0xFF111827)],
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF0E0E0E), Color(0xFF111827)],
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+        child: SingleChildScrollView(
+          child: _FeatureList(controller: controller),
         ),
       ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+}
+
+class _FeatureList extends StatelessWidget {
+  const _FeatureList({required this.controller});
+
+  final OnboardingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 32),
+        RichText(
+          text: TextSpan(
+            style: theme.textTheme.headlineSmall,
             children: [
-              const SizedBox(height: 32),
-              RichText(
-                text: TextSpan(
-                  style: theme.textTheme.headlineSmall,
-                  children: [
-                    const TextSpan(text: 'Welcome to '),
-                    TextSpan(
-                      text: 'HabitHero',
-                      style: TextStyle(color: theme.colorScheme.primary),
-                    ),
-                  ],
-                ),
+              const TextSpan(text: 'Welcome to '),
+              TextSpan(
+                text: 'HabitHero',
+                style: TextStyle(color: theme.colorScheme.primary),
               ),
-              const SizedBox(height: 16),
-              const _FeatureTile(
-                icon: Icons.check_circle_outline,
-                title: 'Track Habits',
-                subtitle: 'Monitor your daily progress',
-              ),
-              const _FeatureTile(
-                icon: Icons.alarm,
-                title: 'Reminders',
-                subtitle: 'Never forget a habit',
-              ),
-              const _FeatureTile(
-                icon: Icons.bar_chart,
-                title: 'Statistics',
-                subtitle: 'Visualize improvement',
-              ),
-              const _FeatureTile(
-                icon: Icons.stacked_line_chart,
-                title: 'Streaks',
-                subtitle: 'Stay motivated every day',
-              ),
-              const _FeatureTile(
-                icon: Icons.flag,
-                title: 'Goals',
-                subtitle: 'Set achievable targets',
-              ),
-              const _FeatureTile(
-                icon: Icons.widgets,
-                title: 'Widgets',
-                subtitle: 'Quick access on home',
-              ),
-              const _FeatureTile(
-                icon: Icons.dark_mode,
-                title: 'Dark Mode',
-                subtitle: 'Easy on the eyes',
-              ),
-              const _FeatureTile(
-                icon: Icons.privacy_tip,
-                title: 'Privacy',
-                subtitle: 'Your data stays local',
-              ),
-              const Spacer(),
-              FilledButton(
-                onPressed: () => controller.next(context),
-                child: const Text('Continue'),
-              ),
-              const SizedBox(height: 16),
             ],
           ),
         ),
-      ),
+        const SizedBox(height: 16),
+        const _FeatureTile(
+          icon: Icons.check_circle_outline,
+          title: 'Track Habits',
+          subtitle: 'Monitor your daily progress',
+        ),
+        const _FeatureTile(
+          icon: Icons.alarm,
+          title: 'Reminders',
+          subtitle: 'Never forget a habit',
+        ),
+        const _FeatureTile(
+          icon: Icons.bar_chart,
+          title: 'Statistics',
+          subtitle: 'Visualize improvement',
+        ),
+        const _FeatureTile(
+          icon: Icons.stacked_line_chart,
+          title: 'Streaks',
+          subtitle: 'Stay motivated every day',
+        ),
+        const _FeatureTile(
+          icon: Icons.flag,
+          title: 'Goals',
+          subtitle: 'Set achievable targets',
+        ),
+        const _FeatureTile(
+          icon: Icons.widgets,
+          title: 'Widgets',
+          subtitle: 'Quick access on home',
+        ),
+        const _FeatureTile(
+          icon: Icons.dark_mode,
+          title: 'Dark Mode',
+          subtitle: 'Easy on the eyes',
+        ),
+        const _FeatureTile(
+          icon: Icons.privacy_tip,
+          title: 'Privacy',
+          subtitle: 'Your data stays local',
+        ),
+        const Spacer(),
+        FilledButton(
+          onPressed: () => controller.next(context),
+          child: const Text('Continue'),
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }
