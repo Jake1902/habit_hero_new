@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import 'presentation/controller/onboarding_controller.dart';
-import '../core/services/user_prefs_service.dart';
+import '../../core/services/user_prefs_service.dart';
 
 class OnboardingBindings {
   static void register() {
