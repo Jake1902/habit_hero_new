@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../routes/app_pages.dart';
+import '../../../../routes/app_routes.dart';
 import '../../../onboarding/presentation/controller/onboarding_controller.dart';
 import '../../../onboarding/presentation/pages/intro_page.dart';
 import '../../../onboarding/presentation/pages/privacy_page.dart';
@@ -52,7 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   onPressed: () async {
                     await controller.finish();
                     if (context.mounted) {
-                      context.go(AppPages.home);
+                      context.go(AppRoutes.home);
                     }
                   },
                   child: const Text('Get Started'),
