@@ -32,10 +32,12 @@ class ThemeService extends ChangeNotifier {
       case AppTheme.dark:
         return ThemeData.dark(useMaterial3: true);
       case AppTheme.highContrast:
+
         return ThemeData.from(
           colorScheme: const ColorScheme.highContrastLight(),
           useMaterial3: true,
         );
+
       case AppTheme.light:
       default:
         return ThemeData(useMaterial3: true, colorSchemeSeed: Colors.deepPurple);
