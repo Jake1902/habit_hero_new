@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/services/theme_service.dart';
+import 'features/habit/bindings.dart';
 import 'features/onboarding/bindings.dart';
 import 'routes/app_pages.dart';
 
@@ -12,6 +13,7 @@ Future<void> main() async {
   GetIt.I.registerSingleton<ThemeService>(ThemeService(prefs));
   await GetIt.I<ThemeService>().init();
   OnboardingBindings.register();
+  HabitBindings.register();
   runApp(const MyApp());
 }
 
